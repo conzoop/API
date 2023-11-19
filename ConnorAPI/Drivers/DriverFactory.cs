@@ -62,7 +62,7 @@ namespace ConnorAPI.Drivers
         {
             RestClient restClient = new RestClient(BaseUrl);
             RestRequest createListRequest = new RestRequest("lists/");
-            createListRequest.AddQueryParameter("key", "d67a55072cf473900fd3c72dddee7169");
+            createListRequest.AddQueryParameter("key", apiKey);
             createListRequest.AddQueryParameter("token", apiToken);
             createListRequest.AddQueryParameter("name", "TODO");
             createListRequest.AddQueryParameter("idBoard", boardId);
@@ -71,9 +71,8 @@ namespace ConnorAPI.Drivers
             var listInfo = JsonConvert.DeserializeObject<Objects>(createListResponse.Content);
             var todoListId = listInfo?.Id;
 
-
             RestRequest getListRequest = new RestRequest($"lists/{todoListId}");
-            getListRequest.AddQueryParameter("key", "d67a55072cf473900fd3c72dddee7169");
+            getListRequest.AddQueryParameter("key", apiKey);
             getListRequest.AddQueryParameter("token", apiToken);
             RestResponse getListResponse = restClient.Get(getListRequest);
             string retrievedListDetails = getListResponse.Content.ToString();
@@ -163,14 +162,14 @@ namespace ConnorAPI.Drivers
             int statCodeAddDesc = (int)statusCodeAddDesc;
             Console.WriteLine("Add Description Status Code: " + statCodeAddDesc);
             Console.WriteLine($"Card '{cardId}' description: '{"Connor Trello Description Test"}'");
-        }
+        }     
 
         [Test, Order(6)]
         public void CreateNewTODOListNegative()
         {
             RestClient restClient = new RestClient(BaseUrl);
             RestRequest createListRequest = new RestRequest("lists/");
-            createListRequest.AddQueryParameter("key", apiKey);
+            createListRequest.AddQueryParameter("key", "d67a55072cf473900fd3c72dddee7169");
             createListRequest.AddQueryParameter("token", apiToken);
             createListRequest.AddQueryParameter("name", "TODO");
             createListRequest.AddQueryParameter("idBoard", boardId);
@@ -181,7 +180,7 @@ namespace ConnorAPI.Drivers
 
 
             RestRequest getListRequest = new RestRequest($"lists/{todoListId}");
-            getListRequest.AddQueryParameter("key", apiKey);
+            getListRequest.AddQueryParameter("key", "d67a55072cf473900fd3c72dddee7169");
             getListRequest.AddQueryParameter("token", apiToken);
             RestResponse getListResponse = restClient.Get(getListRequest);
             string retrievedListDetails = getListResponse.Content.ToString();
@@ -192,5 +191,6 @@ namespace ConnorAPI.Drivers
             Console.WriteLine($"List ID: {retrievedListId}");
             Console.WriteLine($"List Name: {retrievedListName}");
         }
+
     }
 }
